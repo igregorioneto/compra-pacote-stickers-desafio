@@ -1,5 +1,9 @@
 # compra-pacote-stickers-desafio
 
+## Informações
+<p>Este projeto é referente um desafio encontrado no github</p><br>
+<p>https://github.com/VAGAScom/desafio-front-end</p>
+
 ## Project setup
 ```
 npm install
