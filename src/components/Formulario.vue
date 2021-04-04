@@ -48,7 +48,7 @@
         <div class="enviar">
             <div class="posicao-botao">
                 <span id="resultado-envio"></span>
-                <input @click="envioFormulario" type="submit" value="enviar">
+                <input @click="envioFormulario" type="submit" value="enviar" id="button-enviar">
                 <div v-if="respostaEnvio" id="respostaEnvio">Formulário enviado com sucesso!</div>
             </div>
         </div>
@@ -107,6 +107,9 @@ export default {
             const vue = document.getElementById('vue');
             const angular = document.getElementById('angular');
             const textInfo = document.getElementById('textarea');
+            
+            const button = document.getElementById('button-enviar');
+            button.disabled = true;
 
             react.checked = true;
             vue.checked = false;
@@ -141,7 +144,7 @@ export default {
     margin-bottom: 30px;
 }
 
-.checkbox-values input:checked{
+.checkbox-values input:after{
     background-color: #191847;
 }
 
@@ -160,10 +163,32 @@ export default {
     font-size: 16px;
 }
 
+.btn:hover{
+    width: 50px;
+    height: 50px;
+    background-color: #191847;
+    color: #FFFFFF;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
 .btnDecrement{
     width: 50px;
     height: 50px;
     background-color: #2F3676;
+    color: #FFFFFF;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btnDecrement:hover{
+    width: 50px;
+    height: 50px;
+    background-color: #191847;
     color: #FFFFFF;
     border-radius: 5px;
     margin-right: 10px;
@@ -213,12 +238,47 @@ export default {
 .posicao-botao input{
     float: right;
     font-size: 20px;
+    font-weight: bold;
     color: #FFFFFF;
     background-color: #2F3676;
     width: 120px;
     height: 40px;
     margin-top: 30px;
     margin-right: 30px;
+    border: 1px solid #555555;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.posicao-botao input:hover{
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #191847;
+    width: 120px;
+    height: 40px;
+    margin-top: 30px;
+    margin-right: 30px;
+    border: 1px solid #555555;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+}
+.posicao-botao input:disabled{
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #555555;
+    background-color: #C5CFD6;
+    width: 120px;
+    height: 40px;
+    margin-top: 30px;
+    margin-right: 30px;
+    border: 1px solid #555555;
     border-radius: 8px;
     cursor: pointer;
     text-align: center;
