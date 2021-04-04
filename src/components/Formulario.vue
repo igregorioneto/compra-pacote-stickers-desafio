@@ -5,21 +5,21 @@
             <div class="checkbox">
                 <div class="checkbox-values">
                     <label for="React">
-                        <input type="checkbox" name="React" id="">
+                        <input type="checkbox" name="React" id="react" checked>
                         <span>React</span>
                     </label>
                 </div>
                 
                 <div class="checkbox-values">
                     <label for="Vue">
-                        <input type="checkbox" name="Vue" id="">
+                        <input type="checkbox" name="Vue" id="vue">
                         <span>Vue</span>
                     </label>
                 </div>
                 
                 <div class="checkbox-values">
                     <label for="Angular">
-                        <input type="checkbox" name="Angular" id="">
+                        <input type="checkbox" name="Angular" id="angular">
                         <span>Angular</span>
                     </label>
                 </div>
@@ -29,23 +29,27 @@
         <div class="quantos-stickers">
             <p>Quantos stickers de cada?</p>
             <div class="quantidade">
-                <input class="btn" type="submit" value="-">
-                <input class="text" type="text" value="0" disabled>
-                <input class="btn" type="submit" value="+">
+                <input 
+                @click="decrementQuantidade" 
+                id="disabled"
+                class="btnDecrement" type="submit" value="-">
+                <input class="text" type="text" :value="count" disabled>
+                <input @click="incrementQuantidade" class="btn" type="submit" value="+">
             </div>
         </div>
 
         <div class="observacoes">
             <p>Observações:</p>
             <div class="textarea-observacoes">
-                <textarea name="" id=""></textarea>
+                <textarea name="" id="textarea"></textarea>
             </div>
         </div>
 
         <div class="enviar">
             <div class="posicao-botao">
                 <span id="resultado-envio"></span>
-                <input type="submit" value="enviar">
+                <input @click="envioFormulario" type="submit" value="enviar">
+                <div v-if="respostaEnvio" id="respostaEnvio">Formulário enviado com sucesso!</div>
             </div>
         </div>
     </div>
@@ -53,7 +57,67 @@
 
 <script>
 export default {
-    
+    data(){
+        return{
+            count: 0,
+            respostaEnvio: false,
+            infoCompras: [],
+            tipoStickers: []
+        }
+    },
+    methods:{
+        incrementQuantidade(){
+            this.count++;
+            if(this.count > 0){
+                document.getElementById('disabled').disabled = false;
+            }
+        },
+        decrementQuantidade(){
+            this.count--;
+            if(this.count == 0){
+                document.getElementById('disabled').disabled = true;
+            }
+        },
+        envioFormulario(){
+            const react = document.getElementById('react');
+            const vue = document.getElementById('vue');
+            const angular = document.getElementById('angular');
+            const textInfo = document.getElementById('textarea');
+            
+            if(react.checked){
+                this.tipoStickers.push(react.name);
+            }
+            if(vue.checked){
+                this.tipoStickers.push(vue.name);
+            }
+            if(angular.checked){
+                this.tipoStickers.push(angular.name);
+            }
+
+            this.infoCompras.push(
+                {tipos: this.tipoStickers,
+                 quantidade: this.count,
+                 comentario: textInfo.value});
+
+            localStorage.setItem("informacoes_compras",JSON.stringify(this.infoCompras));
+            this.limparFormulario();
+        },
+        limparFormulario(){
+            const react = document.getElementById('react');
+            const vue = document.getElementById('vue');
+            const angular = document.getElementById('angular');
+            const textInfo = document.getElementById('textarea');
+
+            react.checked = true;
+            vue.checked = false;
+            angular.checked = false;
+            textInfo.value = '';
+            this.count = 0;
+            this.respostaEnvio = true;
+        }
+    },mounted(){
+        document.getElementById('disabled').disabled = true;
+    }
 }
 </script>
 
@@ -93,6 +157,29 @@ export default {
     border-radius: 5px;
     margin-right: 10px;
     cursor: pointer;
+    font-size: 16px;
+}
+
+.btnDecrement{
+    width: 50px;
+    height: 50px;
+    background-color: #2F3676;
+    color: #FFFFFF;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btnDecrement:disabled{
+    width: 50px;
+    height: 50px;
+    background-color: #C5CFD6;
+    color: #071723;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .text{
@@ -136,5 +223,13 @@ export default {
     cursor: pointer;
     text-align: center;
     text-transform: uppercase;
+}
+
+#respostaEnvio{
+    float: left;
+    margin-top: 35px;
+    margin-left: 30px;
+    color: #3CB371;
+    font-size: 20px;
 }
 </style>
